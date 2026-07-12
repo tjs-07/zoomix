@@ -21,7 +21,17 @@ export default function LandingPage() {
             </nav>
 
             <div className="landingMainContainer">
-                <div>
+                <div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    width: "100%",
+    height: "100%",
+  }}
+>
                     <h1>
                         <span style={{ 
                             background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
@@ -36,16 +46,16 @@ export default function LandingPage() {
                     </div>
                 </div>
                 
-                <div className="uiMockupContainer" style={{
+                {/* <div className="uiMockupContainer" style={{
                     position: "relative",
                     width: "100%",
                     height: "100%",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center"
-                }}>
+                }}> */}
                     {/* Subtle light glow circle behind mockup */}
-                    <div style={{
+                    {/* <div style={{
                         position: "absolute",
                         width: "350px",
                         height: "350px",
@@ -53,10 +63,10 @@ export default function LandingPage() {
                         background: "radial-gradient(circle, var(--primary-glow) 0%, transparent 70%)",
                         filter: "blur(30px)",
                         zIndex: 1
-                    }}></div>
+                    }}></div> */}
 
                     {/* Premium CSS Video Meeting Mockup (Light theme) */}
-                    <div style={{
+                    {/* <div style={{
                         position: "relative",
                         width: "90%",
                         maxWidth: "450px",
@@ -70,9 +80,9 @@ export default function LandingPage() {
                         gridTemplateColumns: "1fr 1fr",
                         gap: "12px",
                         zIndex: 2
-                    }}>
+                    }}> */}
                         {/* Stream 1 */}
-                        <div style={{
+                        {/* <div style={{
                             position: "relative",
                             background: "linear-gradient(45deg, #f1f5f9, #e2e8f0)",
                             borderRadius: "10px",
@@ -113,10 +123,10 @@ export default function LandingPage() {
                                 <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10b981" }}></span>
                                 Rakesh Mishra
                             </span>
-                        </div>
+                        </div> */}
 
                         {/* Stream 2 */}
-                        <div style={{
+                        {/* <div style={{
                             position: "relative",
                             background: "linear-gradient(45deg, #f8fafc, #f1f5f9)",
                             borderRadius: "10px",
@@ -157,10 +167,10 @@ export default function LandingPage() {
                                 <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10b981" }}></span>
                                 Rohan Sharma
                             </span>
-                        </div>
+                        </div> */}
 
                         {/* Stream Controls Overlay */}
-                        <div style={{
+                        {/* <div style={{
                             gridColumn: "span 2",
                             display: "flex",
                             justifyContent: "center",
@@ -170,11 +180,11 @@ export default function LandingPage() {
                             <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#f1f5f9", border: "1px solid rgba(0,0,0,0.06)", display: "flex", alignItems: "center", justifyContent: "center" }}>🎤</div>
                             <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#f1f5f9", border: "1px solid rgba(0,0,0,0.06)", display: "flex", alignItems: "center", justifyContent: "center" }}>📹</div>
                             <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#ef4444", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>📞</div>
-                        </div>
-                    </div>
-                </div>
+                        </div> */}
+                    {/* </div>
+                </div> */}
             </div>
-        </div>
+        // </div>
     )
 }
 

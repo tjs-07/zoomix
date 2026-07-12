@@ -111,7 +111,7 @@ function HomeComponent() {
                             border: '1px solid rgba(0, 0, 0, 0.08)',
                             boxShadow: '0 10px 25px rgba(0, 0, 0, 0.04)',
                             width: '100%',
-                            maxWidth: '520px',
+                            maxWidth: '100%',
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '24px'
@@ -152,59 +152,7 @@ function HomeComponent() {
                         </Paper>
                     </div>
 
-                    <div className='rightPanel' style={{ position: 'relative' }}>
-                        {/* Subtle background glow */}
-                        <div style={{
-                            position: 'absolute',
-                            width: '280px',
-                            height: '280px',
-                            borderRadius: '50%',
-                            background: 'radial-gradient(circle, var(--primary-glow) 0%, transparent 70%)',
-                            filter: 'blur(30px)',
-                            top: '10%',
-                            right: '10%',
-                            pointerEvents: 'none',
-                            zIndex: 1
-                        }}></div>
-                        
-                        {/* CSS Meeting graphic in place of logo3.png (Light theme) */}
-                        <div style={{
-                            position: 'relative',
-                            width: '85%',
-                            aspectRatio: '1.5',
-                            background: '#ffffff',
-                            borderRadius: '16px',
-                            border: '1px solid rgba(0,0,0,0.06)',
-                            boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            padding: '24px',
-                            gap: '16px',
-                            zIndex: 2
-                        }}>
-                            {/* Window Header */}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <div style={{ display: 'flex', gap: '6px' }}>
-                                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }}></div>
-                                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }}></div>
-                                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }}></div>
-                                </div>
-                                <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Zoomix Premium Call</span>
-                            </div>
-                            
-                            {/* Window Grid */}
-                            <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                                <div style={{ background: '#f1f5f9', border: '1px solid rgba(0,0,0,0.04)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-                                    <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>👤</span>
-                                    <span style={{ position: 'absolute', bottom: '6px', left: '8px', fontSize: '0.7rem', color: '#475569', fontWeight: '500' }}>You</span>
-                                </div>
-                                <div style={{ background: '#e2e8f0', border: '1px solid rgba(0,0,0,0.04)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-                                    <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>👥</span>
-                                    <span style={{ position: 'absolute', bottom: '6px', left: '8px', fontSize: '0.7rem', color: '#475569', fontWeight: '500' }}>Room Participants</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </Box>
         </ThemeProvider>

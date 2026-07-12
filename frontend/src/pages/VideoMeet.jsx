@@ -119,8 +119,7 @@ export default function VideoMeetComponent() {
     useEffect(() => {
         console.log("HELLO")
         getPermissions();
-
-    })
+    }, [])
 
     let getDislayMedia = () => {
         if (screen) {
@@ -300,10 +299,67 @@ export default function VideoMeetComponent() {
         })
     }
 
+    let initPeerConnection = (socketListId) => {
+        if (connections[socketListId]) return;
+
+        connections[socketListId] = new RTCPeerConnection(peerConfigConnections)
+        
+        connections[socketListId].onicecandidate = function (event) {
+            if (event.candidate != null) {
+                socketRef.current.emit('signal', socketListId, JSON.stringify({ 'ice': event.candidate }))
+            }
+        }
+
+        connections[socketListId].onaddstream = (event) => {
+            console.log("BEFORE:", videoRef.current);
+            console.log("FINDING ID: ", socketListId);
+
+            let videoExists = videoRef.current.find(video => video.socketId === socketListId);
+
+            if (videoExists) {
+                console.log("FOUND EXISTING");
+                setVideos(videos => {
+                    const updatedVideos = videos.map(video =>
+                        video.socketId === socketListId ? { ...video, stream: event.stream } : video
+                    );
+                    videoRef.current = updatedVideos;
+                    return updatedVideos;
+                });
+            } else {
+                console.log("CREATING NEW");
+                let newVideo = {
+                    socketId: socketListId,
+                    stream: event.stream,
+                    autoplay: true,
+                    playsinline: true
+                };
+
+                setVideos(videos => {
+                    const updatedVideos = [...videos, newVideo];
+                    videoRef.current = updatedVideos;
+                    return updatedVideos;
+                });
+            }
+        };
+
+        if (window.localStream !== undefined && window.localStream !== null) {
+            connections[socketListId].addStream(window.localStream)
+        } else {
+            let blackSilence = (...args) => new MediaStream([black(...args), silence()])
+            window.localStream = blackSilence()
+            connections[socketListId].addStream(window.localStream)
+        }
+    }
+
     let gotMessageFromServer = (fromId, message) => {
         var signal = JSON.parse(message)
 
         if (fromId !== socketIdRef.current) {
+            // Dynamically initialize the peer connection if it doesn't exist yet
+            if (!connections[fromId]) {
+                initPeerConnection(fromId);
+            }
+
             if (signal.sdp) {
                 connections[fromId].setRemoteDescription(new RTCSessionDescription(signal.sdp)).then(() => {
                     if (signal.sdp.type === 'offer') {
@@ -322,9 +378,6 @@ export default function VideoMeetComponent() {
         }
     }
 
-
-
-
     let connectToSocketServer = () => {
         socketRef.current = io.connect(server_url, { secure: false })
 
@@ -342,60 +395,7 @@ export default function VideoMeetComponent() {
 
             socketRef.current.on('user-joined', (id, clients) => {
                 clients.forEach((socketListId) => {
-
-                    connections[socketListId] = new RTCPeerConnection(peerConfigConnections)
-                    // Wait for their ice candidate       
-                    connections[socketListId].onicecandidate = function (event) {
-                        if (event.candidate != null) {
-                            socketRef.current.emit('signal', socketListId, JSON.stringify({ 'ice': event.candidate }))
-                        }
-                    }
-
-                    // Wait for their video stream
-                    connections[socketListId].onaddstream = (event) => {
-                        console.log("BEFORE:", videoRef.current);
-                        console.log("FINDING ID: ", socketListId);
-
-                        let videoExists = videoRef.current.find(video => video.socketId === socketListId);
-
-                        if (videoExists) {
-                            console.log("FOUND EXISTING");
-
-                            // Update the stream of the existing video
-                            setVideos(videos => {
-                                const updatedVideos = videos.map(video =>
-                                    video.socketId === socketListId ? { ...video, stream: event.stream } : video
-                                );
-                                videoRef.current = updatedVideos;
-                                return updatedVideos;
-                            });
-                        } else {
-                            // Create a new video
-                            console.log("CREATING NEW");
-                            let newVideo = {
-                                socketId: socketListId,
-                                stream: event.stream,
-                                autoplay: true,
-                                playsinline: true
-                            };
-
-                            setVideos(videos => {
-                                const updatedVideos = [...videos, newVideo];
-                                videoRef.current = updatedVideos;
-                                return updatedVideos;
-                            });
-                        }
-                    };
-
-
-                    // Add the local video stream
-                    if (window.localStream !== undefined && window.localStream !== null) {
-                        connections[socketListId].addStream(window.localStream)
-                    } else {
-                        let blackSilence = (...args) => new MediaStream([black(...args), silence()])
-                        window.localStream = blackSilence()
-                        connections[socketListId].addStream(window.localStream)
-                    }
+                    initPeerConnection(socketListId);
                 })
 
                 if (id === socketIdRef.current) {
