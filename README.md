@@ -4,7 +4,7 @@ A full-stack video conferencing web application that enables users to create and
 
 ## 🌐 Live Demo
 
-🚀 **Frontend:** https://zoomix-p7br47a3x-tejas-projects-355e11f3.vercel.app/
+🚀 **Frontend:** https://https://zoomix-8gi2.vercel.app/
 
 ## 🚀 Features
 
