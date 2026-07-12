@@ -52,11 +52,12 @@ export default function Authentication() {
                 let result = await handleRegister(name, username, password);
                 console.log(result);
                 setUsername("");
+                setPassword("");
+                setName("");
                 setMessage(result);
                 setOpen(true);
                 setError("")
                 setFormState(0)
-                setPassword("")
             }
         } catch (err) {
 
@@ -111,36 +112,39 @@ export default function Authentication() {
 
                         <Box component="form" noValidate sx={{ mt: 1 }}>
                             {formState === 1 ? <TextField
+                                key="name-input"
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="username"
+                                id="name"
                                 label="Full Name"
-                                name="username"
-                                value={name}
+                                name="name"
+                                value={name || ""}
                                 autoFocus
                                 onChange={(e) => setName(e.target.value)}
                             /> : <></>}
 
                             <TextField
+                                key="username-input"
                                 margin="normal"
                                 required
                                 fullWidth
                                 id="username"
                                 label="Username"
                                 name="username"
-                                value={username}
+                                value={username || ""}
                                 autoFocus
                                 onChange={(e) => setUsername(e.target.value)}
 
                             />
                             <TextField
+                                key="password-input"
                                 margin="normal"
                                 required
                                 fullWidth
                                 name="password"
                                 label="Password"
-                                value={password}
+                                value={password || ""}
                                 type="password"
                                 onChange={(e) => setPassword(e.target.value)}
 
